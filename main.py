@@ -29,8 +29,10 @@ class Player(pygame.sprite.Sprite):
 class Bullet(pygame.sprite.Sprite):
     def __init__(self, direction, character):
         pygame.sprite.Sprite.__init__(self)
-        self.image = pygame.Surface((3, 3))
-        self.image.fill((255, 0, 0))
+        self.image = pygame.Surface((6, 6))
+        #self.image.fill((255, 0, 0))
+        pygame.draw.circle(self.image, (0,255, 0), (3, 3), 3)
+        pygame.draw.circle(self.image, (255, 0, 0), (3, 3), 1)
         self.image.convert()
         self.rect = self.image.get_rect()
         self.direction = direction

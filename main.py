@@ -31,7 +31,7 @@ class Bullet(pygame.sprite.Sprite):
         pygame.sprite.Sprite.__init__(self)
         self.image = pygame.Surface((6, 6))
         #self.image.fill((255, 0, 0))
-        pygame.draw.circle(self.image, (0,255, 0), (3, 3), 3)
+        pygame.draw.circle(self.image, (255, 255, 255), (3, 3), 3)
         pygame.draw.circle(self.image, (255, 0, 0), (3, 3), 1)
         self.image.convert()
         self.rect = self.image.get_rect()
@@ -319,14 +319,25 @@ class Monster(pygame.sprite.Sprite):
         
         
         self.speed = 1
+        
     
     def update(self, character, level):
         print(level)
     ####
-        #if level == 2:
-        #    self.speed = 2
-        #if level == 6:
-        #    self.speed = 3
+        if level == 2:
+            self.speed = 2
+        if level == 3:
+            self.speed = 2
+        if level == 4:
+            self.speed = 2
+        if level == 5:
+            self.speed = 3
+        if level == 6:
+            self.speed = 3
+        if level == 7:
+            self.speed = 3
+        if level == 8:
+            self.speed = 3
         
         self.char = character
         x = self.char.rect.centerx
@@ -447,10 +458,11 @@ class Timer():
             superMonster2 = Monster()
             superMonster2.image = pygame.image.load("img/superMonster_crab.png").convert_alpha()
             superMonster2.rect.center = (random.randint(400, 500), random.randint(-120, 20))
-            superMonster2.speed_trigger = 0
-            superMonster2.current_trigger = 1
+            superMonster2.speed_trigger = 1
+            superMonster2.current_trigger = 0
             self.superMonster2_group.empty()
-            self.superMonster2_group.add(superMonster2)
+            if self.level >= 6:
+                self.superMonster2_group.add(superMonster2)
             
             superMonster = Monster()
             superMonster.image = pygame.image.load("img/SuperMonster_mummy.png")
@@ -459,7 +471,14 @@ class Timer():
             superMonster.speed_trigger = 1
             superMonster.current_trigger = 0
             self.superMonster_group.empty()
-            self.superMonster_group.add(superMonster)
+            if self.level >= 3:    
+                self.superMonster_group.add(superMonster)
+                
+        ### counter for the monsters speed
+            zombie = Monster()
+            zombie.speed_trigger = 1
+            zombie.current_trigger = 0
+            
             
             
 ##### instantiates the objects and addes them to the forest_group list
@@ -763,6 +782,9 @@ def main():
     bullet_group = pygame.sprite.Group()
     
     ### initialize the monseter
+    zombie = Monster()
+    zombie.speed_trigger = 1
+    zombie.current_trigger = 0
     monster_group = pygame.sprite.Group()
     superMonster_group = pygame.sprite.Group()
     superMonster2_group = pygame.sprite.Group()
@@ -770,24 +792,34 @@ def main():
         monster = Monster()
         monster_group.add(monster)
     
-    ## instantiate the super zombie
+    
+    appear_crab = False
+    appear_mummy = False
+    
+## instantiate the super zombie
+    
     superMonster = Monster()
     superMonster.image = pygame.image.load("img/SuperMonster_mummy.png")
     superMonster.image.convert_alpha()
     superMonster.rect.center = (random.randint(400, 500), random.randint(150, 340))
     superMonster.speed_trigger = 1
     superMonster.current_trigger = 0
-    superMonster_group.add(superMonster)
+    if appear_mummy == True:
+        superMonster_group.add(superMonster)
+
     
-    ## instantiate the super zombie2 ze CRAB
+## instantiate the super zombie2 ze CRAB
+    
     superMonster2 = Monster()
     superMonster2.image = pygame.image.load("img/superMonster_crab.png").convert_alpha()
     superMonster2.rect.center = (random.randint(400, 500), random.randint(-120, 20))
-    superMonster2.speed_trigger = 0
-    superMonster2.current_trigger = 1
-    superMonster2_group.add(superMonster2)
-    
+    superMonster2.speed_trigger = 1
+    superMonster2.current_trigger = 0
+    if appear_crab == True:
+        superMonster2_group.add(superMonster2)
+        
 
+    
 
     ## initialize the clock
     timer = Timer()
@@ -886,13 +918,42 @@ def main():
             
             
             ## blits the monster
-            monster_group.update(character, timer.level)
+            #monster_group.update(character, timer.level)
             
-    #### speed check
+####### speed check
+            if timer.level == 3:
+                appear_mummy = True
+            if timer.level == 6:
+                appear_crab = True
+            ### adjust speed
+            if timer.level == 2:
+                superMonster.speed_trigger = 1
+                superMonster2.current_trigger = 0
+                zombie.speed_trigger = 3
+            if timer.level == 3:
+                zombie.speed_trigger = 2
+                superMonster.speed_trigger = 3
+            if timer.level == 4:
+                zombie.speed_trigger = 1
+                superMonster.speed_trigger = 2
+            if timer.level == 5:
+                zombie.speed_trigger = 3
+                superMonster.speed_trigger = 4
+            if timer.level == 6:
+                zombie.speed_trigger = 2
+                superMonster.speed_trigger = 4
+                superMonster2.speed_trigger = 4
+            if timer.level == 7:
+                zombie.speed_trigger = 2
+                superMonster.speed_trigger = 3
+                superMonster2.speed_trigger = 4
+            if timer.level == 8:
+                zombie.speed_trigger = 2
+                superMonster.speed_trigger = 3
+                superMonster2.speed_trigger = 3
+                           
+
             
-            
-            monster_group.draw(windowSurface)
-            uncrowd(monster_group)
             if superMonster.current_trigger < superMonster.speed_trigger:
                 superMonster.current_trigger = superMonster.current_trigger + 1
             else:
@@ -903,6 +964,16 @@ def main():
             else:
                 superMonster2_group.update(character, timer.level)
                 superMonster2.current_trigger = 0
+                
+            if zombie.current_trigger < zombie.speed_trigger:
+                zombie.current_trigger = zombie.current_trigger + 1
+            else:
+                monster_group.update(character, timer.level)
+                zombie.current_trigger = 0
+                
+            monster_group.draw(windowSurface)
+            uncrowd(monster_group)
+            
             superMonster2_group.draw(windowSurface)
             superMonster_group.draw(windowSurface)
             

@@ -1,0 +1,4 @@
+User-agent: *
+Disallow: 
+
+Sitemap: http://codetricity.github.io/swarm_gen2/sitemap.xml 

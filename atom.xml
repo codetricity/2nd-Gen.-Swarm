@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Swarm Gen2]]></title>
+  <link href="http://codetricity.github.io/swarm_gen2/atom.xml" rel="self"/>
+  <link href="http://codetricity.github.io/swarm_gen2/"/>
+  <updated>2014-02-27T19:04:30-08:00</updated>
+  <id>http://codetricity.github.io/swarm_gen2/</id>
+  <author>
+    <name><![CDATA[Craig Oda]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[First Post.]]></title>
+    <link href="http://codetricity.github.io/swarm_gen2/blog/2014/02/27/first-post/"/>
+    <updated>2014-02-27T18:57:29-08:00</updated>
+    <id>http://codetricity.github.io/swarm_gen2/blog/2014/02/27/first-post</id>
+    <content type="html"><![CDATA[
+]]></content>
+  </entry>
+  
+</feed>

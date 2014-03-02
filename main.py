@@ -16,12 +16,6 @@ try:
     import android
 except ImportError:
     android = None
-
-class Ground(pygame.sprite.Sprite):
-    def __init__(self):
-        self.image = pygame.image.load("img/grass.png").convert()
-        self.rect = self.image.get_rect()
-
    
 ## uncrowd algorithm
 def uncrowd(mon_group):

@@ -8,6 +8,7 @@ from swarm import Timer as Timer
 from swarm import Monster as Monster
 from swarm import Plant as Plant
 from swarm import Player as Player
+from swarm import Ground as Ground
 from swarm import speed
 from swarm.colors import *
 
@@ -156,6 +157,7 @@ def main():
         superMonster_group.add(superMonster)
 
     
+# Review section below as part of lesson with Kai
 ## instantiate the super zombie2 ze CRAB
     superMonster2 = Monster("crab")
     superMonster2.image = pygame.image.load("img/superMonster_crab.png").convert_alpha()
@@ -163,9 +165,7 @@ def main():
     superMonster2.speed_trigger = 1
     superMonster2.current_trigger = 0
     if appear_crab == True:
-        superMonspter2_group.add(superMonster2)
-        
-    
+        superMonster2_group.add(superMonster2)
 
     ## initialize the clock
     timer = Timer()
@@ -177,6 +177,7 @@ def main():
     
     while gameOn:
 ### start screen
+# Kai needs to put the quit loop at the top of the main while loop.
         if timer.level == 0:
             startScreen.start()
             windowSurface.blit(startScreen.start(), (0, 0))
@@ -340,9 +341,6 @@ def main():
                 
                 windowSurface.blit(no_text, no_rect)
                 windowSurface.blit(yes_text, yes_rect)
-                
-    
-            
                 
             pygame.display.update()
             clock.tick(FPS)
